@@ -6,14 +6,40 @@ import {
   CaretUpFilled,
   TagOutlined,
   SmileOutlined,
+  HeartFilled,
 } from "@ant-design/icons";
 import { useState } from "react";
 
 function Post() {
+  const [isLiked, setIsLiked] = useState(0);
+  const [likes, setLikes] = useState(187);
+  const [comments, setComments] = useState([
+    {
+      name: "zahra",
+      Comment: "salam",
+      isliked: true,
+    },
+    {
+      name: "asghar",
+      Comment: "bye",
+      isliked: true,
+    },
+    {
+      name: "kokab",
+      Comment: "hi",
+      isliked: true,
+    },
+    {
+      name: "somaye",
+      Comment: "naro",
+      isliked: true,
+    },
+  ]);
+
   const [state, setState] = useState([1, 2, 3, 4, 5]);
   return (
     <div className="rangeback">
-      <Row>
+      <Row className="boxpost">
         <Col span={24}>
           <Row justify="space-between" gutter={[8, 8]}>
             <Col span={6}>
@@ -45,7 +71,25 @@ function Post() {
             <Col>
               <Row>
                 <Col>
-                  <Button type="text" icon={<HeartOutlined />}></Button>
+                  <Button
+                    onClick={() => {
+                      if (isLiked == 0) {
+                        setIsLiked(1);
+                        setLikes(likes + 1);
+                      } else {
+                        setIsLiked(0);
+                        setLikes(likes - 1);
+                      }
+                    }}
+                    type="text"
+                    icon={
+                      isLiked == 0 ? (
+                        <HeartOutlined />
+                      ) : (
+                        <HeartFilled className="ghalb" />
+                      )
+                    }
+                  ></Button>
                 </Col>
                 <Col>
                   <Button type="text" icon={<CommentOutlined />}></Button>
@@ -60,7 +104,7 @@ function Post() {
             </Col>
           </Row>
         </Col>
-        <Col span={24}>Liked by rhyme_bow_haneesh and others</Col>
+        <Col span={24}>likes {likes}</Col>
         <Col span={24}>
           asrelectronicsgeek follow @asrelectronicsgeek . . . . . . . .
           #electricaltransformer #electrician #electricalengineeringstudent
@@ -74,8 +118,36 @@ function Post() {
         </Col>
         <Col span={24}>
           <Row>
-            {state.map((item, index) => {
-              return <Col>ashtonstradling "You will find a best page"</Col>;
+            {comments.map((item, index) => {
+              return (
+                <Col key={index} span={24}>
+                  <Row gutter={[16, 16]}>
+                    <Col className="matn">{item.name} </Col>
+                    <Col flex={1}>{item.Comment}</Col>
+                    <Col>
+                      <Button
+                        onClick={() => {
+                          if (isLiked == 0) {
+                            setIsLiked(1);
+                            setLikes(likes + 1);
+                          } else {
+                            setIsLiked(0);
+                            setLikes(likes - 1);
+                          }
+                        }}
+                        type="text"
+                        icon={
+                          isLiked == 0 ? (
+                            <HeartOutlined />
+                          ) : (
+                            <HeartFilled className="ghalb" />
+                          )
+                        }
+                      ></Button>
+                    </Col>
+                  </Row>
+                </Col>
+              );
             })}
           </Row>
         </Col>
@@ -88,7 +160,21 @@ function Post() {
               <Input placeholder="Add a comment" />
             </Col>
             <Col>
-              <Button>Post</Button>
+              <Button
+                onClick={() => {
+                  setComments((prev) => {
+                    let jadid = prev;
+                    jadid.push({
+                      name: "zahra",
+                      Comment: "salam",
+                      isliked: true,
+                    });
+                    return jadid;
+                  });
+                }}
+              >
+                post
+              </Button>
             </Col>
           </Row>
         </Col>
